@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:id="@+id/rl_contact_item_container"
+        android:layout_height="60dp">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingRight="15dp">
+
+            <ImageView
+                android:id="@+id/iv_avatar"
+                android:layout_width="@dimen/dp_40"
+                android:layout_height="@dimen/dp_40"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="@dimen/dp_10"
+                android:src="@drawable/timg" />
+
+            <!--名称1-16哥-->
+            <TextView
+                android:id="@+id/tv_friend_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/iv_avatar"
+                android:gravity="center_vertical"
+                android:singleLine="true"
+                android:textSize="16dp"
+                android:ellipsize="end"
+                android:text="李白"
+                android:layout_marginRight="45dp"
+                android:textColor="#333333" />
+
+
+            <ImageView
+                android:id="@+id/iv_check_btn"
+
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="20dp"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/check_status"
+                android:visibility="gone"/>
+
+            <View
+                android:id="@+id/v_inner_bottom_line"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_alignParentBottom="true"
+                android:layout_toRightOf="@id/iv_avatar"
+                android:background="#f6f6f6"
+                android:visibility="gone"/>
+
+        </RelativeLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:id="@+id/v_out_bottom_line"
+            android:background="#f6f6f6"
+            android:layout_marginLeft="65dp"/>
+    </RelativeLayout>
+</RelativeLayout>
