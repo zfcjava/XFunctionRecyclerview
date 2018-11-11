@@ -34,12 +34,35 @@ public class XRclController <T>{
                     XRclData<T> itemData = dataSource.get(position);
                     itemData.setChecked(!itemData.isChecked());
                     adapter.notifyDataSetChanged();
+                    //统计选中的数据的数据
+                    statisticsCheckItemCount();
+                } else {
+
                 }
             }
         });
         //TODO A暂时默认Linlearlayout
         this.rcl_listview.setLayoutManager(new LinearLayoutManager(this.rcl_listview.getContext()));
         this.rcl_listview.setAdapter(adapter);
+    }
+
+    /**
+     * 统计选中的Item
+     */
+    private void statisticsCheckItemCount() {
+        int selectCount = getCheckedItemCount();
+        int totalCount = dataSource.size();
+    }
+
+    private int getCheckedItemCount() {
+        int selectCount = 0;
+        for (XRclData<T> data : dataSource
+                ) {
+            if (data.isChecked()) {
+                selectCount++;
+            }
+        }
+        return selectCount;
     }
 
     /**
