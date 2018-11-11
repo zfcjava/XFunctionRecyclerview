@@ -10,7 +10,17 @@ public class XRclData<T> {
      */
     public T realData;
 
+    private boolean isChecked;
+
     public void setRealData(T realData) {
         this.realData = realData;
+    }
+
+    public boolean isChecked() {
+        return isChecked;
+    }
+
+    public void setChecked(boolean isChecked) {
+        this.isChecked = isChecked;
     }
 }

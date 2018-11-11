@@ -29,7 +29,9 @@ public class BasicSampleActivity extends AppCompatActivity {
 
     private void initView() {
         rcl_listview = findViewById(R.id.rcl_listview);
-        xRclController = new XRclController<>(rcl_listview,R.layout.item);
+        xRclController = new XRclController<>(rcl_listview,R.layout.item,R.id.iv_check_btn);
+        //开启多选
+        xRclController.enbleMutilSelect();
     }
 
 

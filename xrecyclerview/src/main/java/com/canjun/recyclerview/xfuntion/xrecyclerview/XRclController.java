@@ -2,6 +2,9 @@ package com.canjun.recyclerview.xfuntion.xrecyclerview;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+
+import com.chad.library.adapter.base.BaseQuickAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,16 +15,28 @@ public class XRclController <T>{
     XRclAdapter adapter;
     List<XRclData<T>> dataSource = new ArrayList<>();
 
+    private boolean enbleMutilSelect;
 
-    public XRclController(RecyclerView rcl_listview,int itemRes) {
+
+    public XRclController(RecyclerView rcl_listview,int itemRes,int checkRes) {
         this.rcl_listview = rcl_listview;
-        adapter = new XRclAdapter<T>(itemRes, dataSource){
+        adapter = new XRclAdapter<T>(itemRes, dataSource, checkRes){
 
             @Override
             void convert(XRclViewHolder helper, T item) {
 
             }
         };
+        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                if (enbleMutilSelect) {
+                    XRclData<T> itemData = dataSource.get(position);
+                    itemData.setChecked(!itemData.isChecked());
+                    adapter.notifyDataSetChanged();
+                }
+            }
+        });
         //TODO A暂时默认Linlearlayout
         this.rcl_listview.setLayoutManager(new LinearLayoutManager(this.rcl_listview.getContext()));
         this.rcl_listview.setAdapter(adapter);
@@ -34,6 +49,14 @@ public class XRclController <T>{
     public void setData(List<T> datas){
         syncDataSource(datas);
         adapter.notifyDataSetChanged();
+    }
+
+
+    public void enbleMutilSelect(){
+        this.enbleMutilSelect = true;
+        if (adapter != null) {
+            adapter.enableMultiSelect(true);
+        }
     }
 
 
