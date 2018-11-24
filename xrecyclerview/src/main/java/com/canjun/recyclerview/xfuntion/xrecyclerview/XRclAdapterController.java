@@ -7,7 +7,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class XRclController <T>{
+public abstract class XRclAdapterController<T,VH extends XRclViewHolder>{
 
     RecyclerView rcl_listview;
     XRclAdapter adapter;
@@ -16,12 +16,13 @@ public class XRclController <T>{
     private MutilSelectConfig mutilSelectConfig;
 
 
-    public XRclController(RecyclerView rcl_listview,int itemRes) {
+    public XRclAdapterController(RecyclerView rcl_listview, int itemRes) {
         this.rcl_listview = rcl_listview;
-        adapter = new XRclAdapter<T>(itemRes, dataSource){
+        adapter = new XRclAdapter<T>(itemRes, dataSource) {
+
             @Override
             void convert(XRclViewHolder helper, T item) {
-
+                XRclAdapterController.this.convert(helper, item);
             }
         };
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
@@ -32,11 +33,10 @@ public class XRclController <T>{
                     itemData.setChecked(!itemData.isChecked());
                     adapter.notifyDataSetChanged();
                     //统计选中的数据的数据
-                    int selectCount = getCheckedItemCount();
-                    int totalCount = dataSource.size();
-                    mutilSelectConfig.syncSelectNum(selectCount, totalCount);
+                    syncSelectedItemCount();
                 } else {
-
+                    XRclAdapterController.this.
+                            onItemClick(adapter, view, position);
                 }
             }
         });
@@ -45,15 +45,45 @@ public class XRclController <T>{
     }
 
 
-    private int getCheckedItemCount() {
-        int selectCount = 0;
+    protected abstract void convert(XRclViewHolder helper, T item);
+
+    protected abstract void onItemClick(BaseQuickAdapter adapter, View view, int position);
+
+    /**
+     * 同步选中的数据
+     */
+    private void syncSelectedItemCount() {
+        if (mutilSelectConfig == null) {
+            return;
+        }
+        int selectCount = getSelectedItemCount();
+        int totalCount = dataSource.size();
+        mutilSelectConfig.syncSelectNum(selectCount, totalCount);
+    }
+
+
+    /**
+     * 获取当前选中Item的数目
+     * @return
+     */
+    private int getSelectedItemCount() {
+        return getSelectedData().size();
+    }
+
+
+    /**
+     * 获取选中的数据源
+     * @return
+     */
+    public List<T> getSelectedData() {
+        List<T> seletedDatas = new ArrayList<>();
         for (XRclData<T> data : dataSource
                 ) {
             if (data.isChecked()) {
-                selectCount++;
+                seletedDatas.add(data.realData);
             }
         }
-        return selectCount;
+        return seletedDatas;
     }
 
     /**
@@ -63,6 +93,7 @@ public class XRclController <T>{
     public void setData(List<T> datas){
         syncDataSource(datas);
         adapter.notifyDataSetChanged();
+        syncSelectedItemCount();
     }
 
 

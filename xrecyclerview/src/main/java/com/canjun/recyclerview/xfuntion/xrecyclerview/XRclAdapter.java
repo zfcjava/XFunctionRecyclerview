@@ -7,17 +7,17 @@ import java.util.List;
 
 public abstract class XRclAdapter<T> extends BaseQuickAdapter<XRclData<T>,XRclViewHolder> {
 
-    private XRclController.MutilSelectConfig mutilSelectConfig;
+    private XRclAdapterController.MutilSelectConfig mutilSelectConfig;
 
     public XRclAdapter(int layoutResId, @Nullable List data) {
         super(layoutResId, data);
     }
 
-    public XRclAdapter(@Nullable List data) {
+    private XRclAdapter(@Nullable List data) {
         super(data);
     }
 
-    public XRclAdapter(int layoutResId) {
+    private XRclAdapter(int layoutResId) {
         super(layoutResId);
     }
 
@@ -45,7 +45,7 @@ public abstract class XRclAdapter<T> extends BaseQuickAdapter<XRclData<T>,XRclVi
      * 设置是否开启多选, 如果传入非空的值，正名执行多选操作
      * @param mutilSelectConfig
      */
-    public void enableMultiSelect(XRclController.MutilSelectConfig mutilSelectConfig) {
+    public void enableMultiSelect(XRclAdapterController.MutilSelectConfig mutilSelectConfig) {
         this.mutilSelectConfig = mutilSelectConfig;
     }
 }

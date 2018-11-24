@@ -1,12 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:id="@+id/rcl_listview">
 
     </android.support.v7.widget.RecyclerView>
+
+    <RelativeLayout
+        android:id="@+id/rl_statistcs"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:visibility="visible"
+
+        android:layout_alignParentBottom="true">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/sp_14"
+            android:text="已选择："
+            android:layout_marginLeft="15dp"
+            android:layout_centerVertical="true"
+            android:textColor="#f3f3f3"/>
+
+        <TextView
+            android:id="@+id/tv_selected_btn"
+            android:layout_width="98dp"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/selectbtn"
+            android:textSize="@dimen/sp_16"
+            android:text="确定(0/0)"
+            android:textColor="#ffffff"
+            android:gravity="center"/>
+    </RelativeLayout>
+
 </LinearLayout>

@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-import com.canjun.recyclerview.xfuntion.sample.xfuntionview.BasicSampleActivity;
+import com.canjun.recyclerview.xfuntion.sample.xfuntionview.MutiSelectRclActivity;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_onclick:
-                Intent intent = new Intent(this, BasicSampleActivity.class);
+                Intent intent = new Intent(this, MutiSelectRclActivity.class);
                 startActivity(intent);
                 break;
         }
