@@ -16,7 +16,7 @@ public class MutiSelectRclActivity extends BasicSelectRclActivity {
     private TextView tv_selected_btn;
 
     protected int getLayoutId() {
-        return R.layout.activity_basic_sample;
+        return R.layout.activity_muti_select;
     }
 
     @Override
@@ -55,14 +55,5 @@ public class MutiSelectRclActivity extends BasicSelectRclActivity {
     public void syncSelectNum(int seletNum, int total) {
         tv_selected_btn.setSelected(seletNum > 0);
         tv_selected_btn.setText("确定(" + seletNum + "/" + total + ")");
-    }
-
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (xRclAdapterController != null) {
-            xRclAdapterController.release();
-        }
     }
 }
