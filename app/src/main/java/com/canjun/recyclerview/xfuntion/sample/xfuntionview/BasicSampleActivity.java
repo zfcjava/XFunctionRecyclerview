@@ -3,6 +3,7 @@ package com.canjun.recyclerview.xfuntion.sample.xfuntionview;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
 import com.canjun.recyclerview.xfuntion.sample.R;
 import com.canjun.recyclerview.xfuntion.xrecyclerview.XRclController;
@@ -29,9 +30,21 @@ public class BasicSampleActivity extends AppCompatActivity {
 
     private void initView() {
         rcl_listview = findViewById(R.id.rcl_listview);
-        xRclController = new XRclController<>(rcl_listview,R.layout.item,R.id.iv_check_btn);
+        xRclController = new XRclController<>(rcl_listview,R.layout.item);
         //开启多选
-        xRclController.enbleMutilSelect();
+        xRclController.enbleMutilSelect(new XRclController.MutilSelectConfig() {
+            @Override
+            public void onItemViewSelectStatusChanged(View itemView, boolean isSelected) {
+                View view = itemView.findViewById(R.id.iv_check_btn);
+                view.setVisibility(View.VISIBLE);
+                view.setSelected(isSelected);
+            }
+
+            @Override
+            public void syncSelectNum(int seletNum, int total) {
+
+            }
+        });
     }
 
 

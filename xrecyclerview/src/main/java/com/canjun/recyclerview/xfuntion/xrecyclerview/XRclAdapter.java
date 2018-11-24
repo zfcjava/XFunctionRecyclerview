@@ -1,19 +1,16 @@
 package com.canjun.recyclerview.xfuntion.xrecyclerview;
 
 import android.support.annotation.Nullable;
-import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import java.util.List;
 
 public abstract class XRclAdapter<T> extends BaseQuickAdapter<XRclData<T>,XRclViewHolder> {
 
-    private int checkRes;
-    private boolean enableMultiSelect;
+    private XRclController.MutilSelectConfig mutilSelectConfig;
 
-    public XRclAdapter(int layoutResId, @Nullable List data, int checkRes) {
+    public XRclAdapter(int layoutResId, @Nullable List data) {
         super(layoutResId, data);
-        this.checkRes = checkRes;
     }
 
     public XRclAdapter(@Nullable List data) {
@@ -26,14 +23,9 @@ public abstract class XRclAdapter<T> extends BaseQuickAdapter<XRclData<T>,XRclVi
 
     @Override
     protected void convert(XRclViewHolder helper, XRclData<T> item) {
-        //TODO 这里处理单选 ， 多选的业务逻辑
-        if (enableMultiSelect) {
-            View view = helper.getView(checkRes);
-            if (view == null) {
-                throw new RuntimeException("checkRes can not be null ");
-            }
-            view.setVisibility(View.VISIBLE);
-            view.setSelected(item.isChecked());
+        if (null != mutilSelectConfig) {
+            //isChecked() 方法对于用户是透明的
+            mutilSelectConfig.onItemViewSelectStatusChanged(helper.itemView, item.isChecked());
         }
         convert(helper,item.realData);
     }
@@ -44,14 +36,16 @@ public abstract class XRclAdapter<T> extends BaseQuickAdapter<XRclData<T>,XRclVi
      * 释放资源
      */
     public void release() {
-
+        if (mutilSelectConfig != null) {
+            mutilSelectConfig = null;
+        }
     }
 
     /**
-     * 设置是否开启多选
-     * @param enableMultiSelect
+     * 设置是否开启多选, 如果传入非空的值，正名执行多选操作
+     * @param mutilSelectConfig
      */
-    public void enableMultiSelect(boolean enableMultiSelect) {
-        this.enableMultiSelect = enableMultiSelect;
+    public void enableMultiSelect(XRclController.MutilSelectConfig mutilSelectConfig) {
+        this.mutilSelectConfig = mutilSelectConfig;
     }
 }
